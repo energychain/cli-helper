@@ -13,7 +13,8 @@ const fs = require('fs');
 const vm = require('vm');
 
 module.exports = function(vorpal) {
-   console.log("HERE");
+   var interactive = vorpal.parse(process.argv, {use: 'minimist'})._ === undefined;
+   
    vorpal
   .command('webuser <meter_point_id>')
   .option('-u --username <user>', 'Username')    
