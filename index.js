@@ -114,7 +114,32 @@ module.exports = function(vorpal) {
 			callback();
 		});		
 	});	
-  
+	
+  function ensure_balancing(args,callback,callback2) {
+	var node = new StromDAOBO.Node({external_id:args.meter_point_id,testMode:true,rpc:global.rpcprovider});	  
+	node.roleLookup().then(function(rl) {
+			rl.relations(node.wallet.address,42).then(function(tx) {				
+				if(typeof args.options.b != "undefined") {
+					rl.setRelation(42,global.smart_contract_stromkonto).then(function(sr) {
+						callback2(args,callback,global.smart_contract_stromkonto,node);																							
+					});
+				} else {
+					if(tx=="0x0000000000000000000000000000000000000000") {
+						node.stromkontoproxyfactory().then(function(skof) {
+								skof.build().then(function(sko) {
+										rl.setRelation(42,sko).then(function(sr) {
+												callback2(args,callback,sko,node);											
+												
+										});
+								});
+						});
+					} else {
+						callback2(args,callback,tx,node);			
+					}		
+				}		
+			});
+		});		
+   }
   function ensureNodeWallet() {	
 		var p1 = new Promise(function(resolve, reject) {
 			if(typeof process.env.privateKey !="undefined") {				

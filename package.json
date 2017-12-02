@@ -1,6 +1,6 @@
 {
   "name": "stromdao-cli-helper",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Helper Module for Energy Chain based command line tools Edit",
   "main": "index.js",
   "scripts": {
