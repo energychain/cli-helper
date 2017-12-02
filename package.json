@@ -1,0 +1,35 @@
+{
+  "name": "stromdao-cli-helper",
+  "version": "0.0.1",
+  "description": "Helper Module for Energy Chain based command line tools Edit",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/energychain/cli-helper.git"
+  },
+  "keywords": [
+    "stromdao",
+    "cli",
+    "helper",
+    "energychain"
+  ],
+  "author": "Thorsten Zoerner <thorsten.zoerner@stromdao.de>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/energychain/cli-helper/issues"
+  },
+  "homepage": "https://github.com/energychain/cli-helper#readme",
+  "dependencies": {
+    "file-zip": "^1.0.1",
+    "stromdao-businessobject": "^0.5.22",
+    "sync-request": "^4.1.0",
+    "vorpal": "^1.12.0"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "devDependencies": {}
+}
