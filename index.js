@@ -41,7 +41,7 @@ module.exports = function(vorpal) {
 												rl.setRelation(224,ss_pub).then(function(tx) {
 												rl.setRelation(223,ss_rsa).then(function(tx) {
 														rl.setRelation(222,ss).then(function(tx) {
-																	vorpal.log("Webuser created",tx);									
+																	if(interactive) this.log("Webuser created",tx);									
 																	// Dump Profile
 																	if(typeof args.options.file != "undefined") {
 																				var storage = require("node-persist");
@@ -61,7 +61,7 @@ module.exports = function(vorpal) {
 																					}
 																				}	
 																				fs.writeFile(args.options.file, JSON.stringify(tmp), 'utf8', function() {
-																					vorpal.log("Profile File written");
+																					this.log("Profile File written");
 																					callback(); 
 																					});	
 																	} else 
@@ -73,7 +73,7 @@ module.exports = function(vorpal) {
 																					ssf.build(enc_profile).then(function(ss) {
 																						node.roleLookup().then(function(rl) {
 																							rl.setRelation(11,ss).then(function(tx) {
-																								vorpal.log("UI Profile set");
+																								this.log("UI Profile set");
 																								callback();
 																							});
 																						});
@@ -107,9 +107,9 @@ module.exports = function(vorpal) {
 		var zip = require('file-zip'); 
 		zip.zipFolder(['./.node-persist'],args.zipfilename,function(err){
 			if(err){
-				vorpal.log('backup zip error',err)
+				this.log('backup zip error',err)
 			}else{
-				vorpal.log('Backup saved to',args.zipfilename);
+				this.log('Backup saved to',args.zipfilename);
 			}
 			callback();
 		});		
@@ -147,7 +147,7 @@ module.exports = function(vorpal) {
 			} else {
 				var node = new StromDAOBO.Node({external_id:"stromdao-mp",rpc:global.rpcprovider,testMode:true});	  
 			}
-				vorpal.log("Initializing node:",node.wallet.address);
+				if (interactive) this.log("Initializing node:",node.wallet.address);
 				global.blk_address=node.wallet.address;
 				node.roleLookup().then(function(rl) {
 					rl.relations(node.wallet.address,42).then(function(tx) {
@@ -162,20 +162,20 @@ module.exports = function(vorpal) {
 										});																				
 									});
 								});
-							}).catch(function(e) {vorpal.log("Consens failed connect Level 2",e);reject();});
+							}).catch(function(e) {this.log("Consens failed connect Level 2",e);reject();});
 						} else {
 							resolve(tx);
 						}				
-					}).catch(function(e) {vorpal.log("Consens failed connect Level 1",e);reject();});
-			}).catch(function(e) {vorpal.log("Consens failed init",e);reject();});		
+					}).catch(function(e) {this.log("Consens failed connect Level 1",e);reject();});
+			}).catch(function(e) {this.log("Consens failed init",e);reject();});		
 		}); 
 		return p1;
   }
    
   ensureNodeWallet().then(function(sko) {
-	global.smart_contract_stromkonto=sko;
-	vorpal.log("Balancing Contract:",global.smart_contract_stromkonto);										
+	global.smart_contract_stromkonto=sko;									
 	if (interactive) {
+		this.log("Balancing Contract:",global.smart_contract_stromkonto);		
 		vorpal
 			.delimiter('stromdao $')
 			.show();
