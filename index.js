@@ -13,6 +13,10 @@ const fs = require('fs');
 const vm = require('vm');
 
 module.exports = function(vorpal) {
+   function errorHandler(error,callback) {
+	   console.log(error);
+	   callback();
+   }
    var interactive = vorpal.parse(process.argv, {use: 'minimist'})._ === undefined;
    
    vorpal
@@ -122,7 +126,7 @@ module.exports = function(vorpal) {
 				if(typeof args.options.b != "undefined") {
 					rl.setRelation(42,global.smart_contract_stromkonto).then(function(sr) {
 						callback2(args,callback,global.smart_contract_stromkonto,node);																							
-					});
+					}).catch(function(e) {vorpal.log("Set Relation failed ",e);reject();})	;
 				} else {
 					if(tx=="0x0000000000000000000000000000000000000000") {
 						node.stromkontoproxyfactory().then(function(skof) {
@@ -138,7 +142,7 @@ module.exports = function(vorpal) {
 					}		
 				}		
 			});
-		});		
+		}).catch(function(e) {vorpal.log("Ensure Balancing failed ",e);reject();});	
    }
   function ensureNodeWallet() {	
 		var p1 = new Promise(function(resolve, reject) {
