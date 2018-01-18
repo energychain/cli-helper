@@ -1,6 +1,6 @@
 {
   "name": "stromdao-cli-helper",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Helper Module for Energy Chain based command line tools Edit",
   "main": "index.js",
   "scripts": {
@@ -24,7 +24,7 @@
   "homepage": "https://github.com/energychain/cli-helper#readme",
   "dependencies": {
     "file-zip": "^1.0.1",
-    "stromdao-businessobject": "^0.5.22",
+    "stromdao-businessobject": "^0.5.29",
     "sync-request": "^4.1.0",
     "vorpal": "^1.12.0"
   },
